@@ -24,16 +24,28 @@ def run_tuned_models():
     models = {
         "Ridge": {
             "model": Ridge(),
-            "params": {"alpha": [0.1, 1.0, 10.0]}
-        },
+            "params": {
+            "alpha": [0.1, 1.0, 10.0],
+            "fit_intercept": [True, False],
+            "solver": ["auto", "svd", "cholesky"]
+          },
+
         "DecisionTree": {
             "model": DecisionTreeRegressor(),
-            "params": {"max_depth": [2, 5, 10], "min_samples_split": [2, 5, 10]}
-        },
+            "params": {
+            "max_depth": [2, 5, 10],
+            "min_samples_split": [2, 5, 10],
+            "min_samples_leaf": [1, 2, 4]
+         },
         "RandomForest": {
             "model": RandomForestRegressor(),
-            "params": {"n_estimators": [50, 100], "max_depth": [5, 10]}
-        }
+            "params": {
+            "n_estimators": [50, 100],
+            "max_depth": [5, 10],
+            "min_samples_split": [2, 5]
+          }
+}
+
     }
 
     for name, config in models.items():
