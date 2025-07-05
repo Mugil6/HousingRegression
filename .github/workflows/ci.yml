@@ -22,6 +22,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run regression script
+    - name: Run hyperparameter tuning script
       run: |
-        python regression.py
+    python hyperparameter_tuning.py
+
