@@ -1,6 +1,6 @@
 from utils import load_data
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.linear_model import Ridge
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
@@ -25,30 +25,31 @@ def run_tuned_models():
         "Ridge": {
             "model": Ridge(),
             "params": {
-            "alpha": [0.1, 1.0, 10.0],
-            "fit_intercept": [True, False],
-            "solver": ["auto", "svd", "cholesky"]
-          },
-
+                "alpha": [0.1, 1.0, 10.0],
+                "fit_intercept": [True, False],
+                "solver": ["auto", "svd", "cholesky"]
+            }
+        },
         "DecisionTree": {
             "model": DecisionTreeRegressor(),
             "params": {
-            "max_depth": [2, 5, 10],
-            "min_samples_split": [2, 5, 10],
-            "min_samples_leaf": [1, 2, 4]
-         },
+                "max_depth": [2, 5, 10],
+                "min_samples_split": [2, 5, 10],
+                "min_samples_leaf": [1, 2, 4]
+            }
+        },
         "RandomForest": {
             "model": RandomForestRegressor(),
             "params": {
-            "n_estimators": [50, 100],
-            "max_depth": [5, 10],
-            "min_samples_split": [2, 5]
-          }
-}
-
+                "n_estimators": [50, 100],
+                "max_depth": [5, 10],
+                "min_samples_split": [2, 5]
+            }
+        }
     }
 
     for name, config in models.items():
+        print(f"\nTuning {name}...")
         grid = GridSearchCV(config["model"], config["params"], cv=3, scoring="r2", n_jobs=-1)
         grid.fit(X_train, y_train)
         best_model = grid.best_estimator_
@@ -56,3 +57,4 @@ def run_tuned_models():
 
 if __name__ == "__main__":
     run_tuned_models()
+
